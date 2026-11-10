@@ -3,6 +3,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
+from database import db
 
 
 class AddProduct(StatesGroup):
@@ -48,6 +49,9 @@ async def add_photo(message: Message, state: FSMContext):
     await state.update_data(photo=message.photo[-1].file_id)
     
     data = await state.get_data()
+
+    await db.add_product_db(data['name'], data['price'], data['description'], data['photo'])
+    
 
     await message.answer_photo(photo=data['photo'], caption=f"Товар добавлен: Название - {data['name']} цена - {data['price']} Описание - {data['description']}")
 

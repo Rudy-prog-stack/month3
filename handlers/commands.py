@@ -5,6 +5,7 @@ from config import bot
 from datetime import datetime
 import random
 
+
 jokes = ["Почему программист не любит природу? — Там слишком много багов.",
          "Что сказал ноль восьмёрке? — Классный ремень!",
          "Почему книга пошла к врачу? — У неё были проблемы с обложкой.",
@@ -53,4 +54,11 @@ async def time_handler(message: Message):
 
     joke = random.choice(jokes)
     await message.answer(f"{joke}")
+
+@router_commands.message(Command('products'))
+async def det_products_handler(message: Message):
+    products = await db.get_product_db()
+
+    for name_product, price, description in products:
+        await message.answer(f"Название - {name_product} \nЦена - {price} \nОписание - {description}")
 

@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
-
+from database import db
 
 class Addlesson(StatesGroup):
     name = State()
@@ -38,7 +38,4 @@ async def add_phone(message: Message, state: FSMContext):
     await state.update_data(phone=message.text)
     
     data = await state.get_data()
-
-    await message.answer(f"Пользователь:{data['name']}\n Возраст:{data['age']} \n Телефон:{data['phone']}")
-
     await state.clear()
