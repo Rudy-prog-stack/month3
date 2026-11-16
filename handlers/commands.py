@@ -3,6 +3,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, FSInputFile
 from config import bot
 from datetime import datetime
+from database import db
 import random
 
 
@@ -62,3 +63,7 @@ async def det_products_handler(message: Message):
     for name_product, price, description in products:
         await message.answer(f"Название - {name_product} \nЦена - {price} \nОписание - {description}")
 
+@router_commands.message(Command('get_products'))
+async def det_products_handler(message: Message):
+    list_products = await db.get_products_db()
+    await message.answer("Список продуктов:" + str(list_products))

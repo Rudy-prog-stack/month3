@@ -50,9 +50,9 @@ async def add_photo(message: Message, state: FSMContext):
     
     data = await state.get_data()
 
-    await db.add_product_db(data['name'], data['price'], data['description'], data['photo'])
+    await db.add_product_db(data['name'], data['price'], data['photo'])
     
 
-    await message.answer_photo(photo=data['photo'], caption=f"Товар добавлен: Название - {data['name']} цена - {data['price']} Описание - {data['description']}")
+    await message.answer_photo(photo=data['photo'], caption=f"Товар добавлен: Название - {data['name']} цена - {data['price']}")
 
     await state.clear()
